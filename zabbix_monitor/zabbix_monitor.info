@@ -1,0 +1,7 @@
+name = Zabbix Monitoring
+description = Provides a mechanism for sites implementing Zabbix to store and monitor server statistics.
+core = 6.x
+dependencies[] = libraries
+
+core = "6.x"
+project = "zabbix"
