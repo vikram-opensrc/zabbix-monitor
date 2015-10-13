@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @defgroup pathauto Pathauto: Automatically generates aliases for content
+ *
+ * The zabbix_monitoring module enables the users to store and monitor their server statistics via Zabbix data.
+ */
+
+/**
+ * @file
+ * Main file for the zabbix_monitor module, which automatically generates aliases for content.
+ *
+ * @ingroup zabbix
+ */
+
+/**
+ * Implements hook_help().
+ */
+function zabbix_monitor_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#zabbix_monitor':
+      $output = t('<p>Provides a mechanism for sites implementing Zabbix to store and monitor server statistics.</p>');
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function zabbix_monitor_menu() {
+  $items['admin/settings/zabbix'] = array(
+    'title' => t('Zabbix credentials settings.'),
+	'description' => t('Settings to connect the Zabbix server.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('zabbix_monitor_settings'),
+    'access arguments' => array('administer zabbix_monitor'),
+    'type' => MENU_LOCAL_TASK,
+	'weight' => -99,
+    'file' => 'zabbix_monitor.admin.inc',
+  );
+  
+  $items['admin/settings/zabbix/configure'] = array(
+    'title' => 'Zabbix data settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('zabbix_graph_settings'),
+    'access arguments' => array('administer zabbix_monitor'),
+    'type' => MENU_LOCAL_TASK,
+	'weight' => -98,
+    'file' => 'zabbix_monitor.admin.inc',
+  );
+  return $items;
+}
+  
+  /**
+ * Implements hook_perm().
+ */
+function zabbix_monitor_perm() {
+  return array(
+    'administer zabbix_monitor',
+  );
+}
